@@ -782,19 +782,36 @@ Sitemap: https://{DOMAIN}/sitemap.xml
 """
     return Response(txt, mimetype='text/plain')
 
-@app.route('/sitemap.xml')
+@app.route('/sitemap.xml', methods=['GET'])
 def sitemap():
-    lastmod = date.today().isoformat()
-    xml = f'''<?xml version="1.0" encoding="UTF-8"?>
+    xml_sitemap = f'''<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://{DOMAIN}/</loc>
-    <lastmod>{lastmod}</lastmod>
+    <loc>https://paneli.art/</loc>
+    <lastmod>{datetime.now().strftime("%Y-%m-%d")}</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
+  <url>
+    <loc>https://paneli.art/#features</loc>
+    <lastmod>{datetime.now().strftime("%Y-%m-%d")}</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://paneli.art/#how-it-works</loc>
+    <lastmod>{datetime.now().strftime("%Y-%m-%d")}</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://paneli.art/#cta</loc>
+    <lastmod>{datetime.now().strftime("%Y-%m-%d")}</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
 </urlset>'''
-    return Response(xml, mimetype='application/xml')
+    return xml_sitemap, 200, {'Content-Type': 'application/xml'}
 
 @app.route('/health')
 def health():
